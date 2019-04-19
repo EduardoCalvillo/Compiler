@@ -54,4 +54,5 @@ void tins_add3(char *instruction, int rA, int rB, int rC);
 int tins_get_current(void);
 int tins_get_next(void);
 void update_jmp_addr(int addr);
+void update_jmp_addr_to(int addr, int to);
 #endif

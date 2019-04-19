@@ -1,3 +1,12 @@
+/* Â faire: 
+        - Check Type
+        - And Or
+        - Emojis
+        -
+        - Pointers
+*/
+
+
 %{
     #include "ts.h"
     int yylex(void);
@@ -31,6 +40,9 @@
 %type <entier> Expr; 
 %type <entier> tIF; 
 %type <entier> tELSE; 
+%type <entier> Else; 
+%type <entier> tWHILE; 
+%type <entier> tPARO; 
 %type <id> Cond; 
 
 %%
@@ -75,7 +87,6 @@ Expr:  tPARO Expr tPARF {$$ = $2;}
     |   Expr  tMOINS  Expr
         {
                 //check_type($1,$3);
-
                 tins_add2("LOAD", 1, ts_get_adr(ts_get_last_index()));
                 ts_pop_tmp();
                 tins_add2("LOAD", 0, ts_get_adr(ts_get_last_index()));
@@ -84,7 +95,7 @@ Expr:  tPARO Expr tPARF {$$ = $2;}
         }
     |   Expr  tMUL  Expr
         {
-                //check_type($1,$3);F
+                //check_type($1,$3); 
                 tins_add2("LOAD", 1, ts_get_adr(ts_get_last_index()));
                 ts_pop_tmp();
                 tins_add2("LOAD", 0, ts_get_adr(ts_get_last_index()));
@@ -173,35 +184,40 @@ Boolean:    tTRUE  {
         |   tFALSE {
                 printf(">bool> ✖\n");
                 $$ = 0;
+                }; 
+
+
+Ligne: tIF tPARO Tests tPARF {
+                        tins_add2("LOAD", 0, ts_get_adr(ts_get_last_index()));
+                        tins_add2("JMPC", -1, 0); 
+                        $1 = tins_get_current();
+                } Body Else {
+                        if ($7 == -1) {
+                                update_jmp_addr($1);
+                        } else {
+                                update_jmp_addr_to($1, $7+1);
+                                update_jmp_addr($7);
+                        }
                 };
+
+Else: tELSE     {
+                        tins_add1("JMP", -1);
+                        $1 = tins_get_current();  
+                } Body {
+                        $$ = $1;
+                }
+                | { $$ = -1; };
  
-
-//À Continuer la Prochain Séance (!!!)
-//Créer un tableau avec tins_get_current(), $1
-//Aprés chaque jmpc, ajouter ces infos dans le tableau
-//Une fois qu'on arrive à update_jmp_addr; en utilisant les données du tableau, modifier l'asm du instTable
-// Ligne      tIF tPARO Tests tPARF {
-//                 tins_add2("LOAD", 0, ts_get_adr(ts_get_last_index()));
-//                 tins_add2("JMPC", -1, 0); 
-//                 $1 = tins_get_current();
-//                 }
-//                 Body %prec tIFEND {update_jmp_addr($1);}
-//         |   
-//         tIF tPARO Tests tPARF {
-//                 tins_add2("LOAD", 0, ts_get_adr(ts_get_last_index()));
-//                 tins_add2("JMPC", -1, 0); 
-//                 $1 = tins_get_current();
-//         } Body tELSE {
-//                 update_jmp_addr($1);
-//                 $7 = tins_get_current();
-//                 tins_add1("JMP", -1); 
-        
-//         } Body {update_jmp_addr($7);};     
-
-
-Ligne: tIF tPARO Tests tPARF Body Else;
-
-Else: tELSE Body | ;
+Ligne: tWHILE tPARO {
+                        $2 = tins_get_next();
+                } Tests tPARF {
+                        tins_add2("LOAD", 0, ts_get_adr(ts_get_last_index()));
+                        tins_add2("JMPC", -1, 0); 
+                        $1 = tins_get_current();
+                }Body {
+                        tins_add1("JMP", $2);
+                        update_jmp_addr($1);
+                };
 
 Tests: Test And_or_Test;
 Test: Expr Cond Expr {
@@ -215,19 +231,20 @@ Test: Expr Cond Expr {
         | Expr;
 And_or_Test: And_Or Test And_or_Test |  ;
 
+
 //Considerer le cas not (test): negation de test
 Cond: tSUP_EGAL {$$ = SUP_EGAL;} 
-| tINF_EGAL {$$ = INF_EGAL;} 
-| tSUP {$$ = SUP;} 
-| tINF {$$ = INF;}
-| tEGAL {$$ = EGAL;}
-| tDIFF {$$ = DIFF;};
+        | tINF_EGAL {$$ = INF_EGAL;} 
+        | tSUP {$$ = SUP;} 
+        | tINF {$$ = INF;}
+        | tEGAL {$$ = EGAL;}
+        | tDIFF {$$ = DIFF;};
 
 And_Or: tAND | tOR;
 
 
 
-Ligne: tWHILE tPARO Tests tPARF Body;
+
 
 
 Ligne: tRET Valeurs tPV;

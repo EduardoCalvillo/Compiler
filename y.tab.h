@@ -144,7 +144,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 16 "compiler.y" /* yacc.c:1909  */
+#line 25 "compiler.y" /* yacc.c:1909  */
 
     int entier;
     char* id;

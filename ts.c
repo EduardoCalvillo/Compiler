@@ -123,7 +123,8 @@ void check_type(int first, int second)
 {
     if (first != second)
     {
-        printError("ಠ_ಠ\ttypes différents %s .. %s\tt(°¤°t)", toString(first), toString(second));
+        printASM();
+        printError("ಠ_ಠ\ttypes différents %s .. %s  @ = %d \tt(°¤°t)", toString(first), toString(second), tins_get_current());
     }
 }
 
@@ -175,6 +176,11 @@ void tins_add3(char *instruction, int rA, int rB, int rC)
 
 void update_jmp_addr(int addr){
     instTable[addr].rA = tins_get_next();
+}
+
+void update_jmp_addr_to(int addr, int to)
+{
+    instTable[addr].rA = to;
 }
 
 int tins_get_current(void){

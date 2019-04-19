@@ -8,6 +8,7 @@ lines = [[line[0]] + [int(x) for x in line[1:]] for line in lines]
 addr = 0
 mem = [0 for i in range(1024)]
 regs = [0 for i in range(16)]
+debug = int(sys.argv[2])
 
 
 def add():
@@ -75,23 +76,35 @@ def diff():
 	regs[lines[addr][1]] = regs[lines[addr][2]] != regs[lines[addr][3]]
 	addr += 1
 
+def jmpc():
+	global addr
+	if(regs[lines[addr][2]] == 0):
+		addr = lines[addr][1]
+	else:
+		addr += 1
+
+def jmp():
+	global addr
+	addr = lines[addr][1]
+
+
 
 
 op = {	'ADD' : add, 'AFC' : afc, 'STORE' : store, 'LOAD' : load, 
 		'MUL' : mul, 'DIV' : div, 'SOU' : sou,
 		'SUPEGAL' : supegal,'SUP' : sup, 'INFEGAL' : infegal, 'INF' : inf,
-		'EGAL' : egal, 'DIFF' : diff}
+		'EGAL' : egal, 'DIFF' : diff, "JMPC" : jmpc, "JMP" : jmp}
 	
 #print(lines)
 
 while addr < len(lines):
-
-	print(lines[addr][0], end="\t")
-	if (addr+1) % 10 == 0: 
-		print()
+	if debug:
+		print(lines[addr][0], end="\t")
+		if (addr+1) % 10 == 0: 
+			print()
 	if lines[addr][0] in op:
 		op[lines[addr][0]]()
-	else:
+	elif debug:
 		print("err: " + str(mem[addr]) + " " + lines[addr][0])
 		#exit(3)
 		break
