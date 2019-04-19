@@ -1,0 +1,1472 @@
+Terminals unused in grammar
+
+   tEMOJI
+   tCONST
+   tEXCLAM
+   tG
+   tERROR
+   tCOM
+
+
+Grammar
+
+    0 $accept: start $end
+
+    1 start: Fonctions
+
+    2 Fonctions: Fonction Fonctions
+    3          | %empty
+
+    4 Fonction: Type_void tID tPARO Args_void tPARF Body
+
+    5 $@1: %empty
+
+    6 Fonction: Type_void tMAIN $@1 tPARO tPARF Body
+
+    7 Type_void: Type
+    8          | tVOID
+
+    9 Args_void: Args
+   10          | tVOID
+
+   11 Type: tINT
+   12     | tCHAR
+   13     | tFLOAT
+   14     | tCHARET
+   15     | tBOOL
+
+   16 Args: Arg Tv_args
+   17     | %empty
+
+   18 Arg: Type tID
+
+   19 Tv_args: tV Arg Tv_args
+   20        | %empty
+
+   21 $@2: %empty
+
+   22 Body: tACCO $@2 Lignes tACCF
+
+   23 Lignes: Ligne Lignes
+   24       | %empty
+
+   25 Ligne: Affectation tPV
+
+   26 Affectation: tID tEQV Expr
+
+   27 Expr: tPARO Expr tPARF
+   28     | Expr tPLUS Expr
+   29     | Expr tMOINS Expr
+   30     | Expr tMUL Expr
+   31     | Expr tDIV Expr
+   32     | Valeurs
+
+   33 Ligne: Declaration tPV
+
+   34 $@3: %empty
+
+   35 Declaration: Type tID $@3 Decl_sans_type
+
+   36 $@4: %empty
+
+   37 $@5: %empty
+
+   38 Declaration: Type tID $@4 tEQV Expr $@5 Decl_sans_type
+
+   39 $@6: %empty
+
+   40 Decl_sans_type: tV tID $@6 Decl_sans_type
+
+   41 $@7: %empty
+
+   42 $@8: %empty
+
+   43 Decl_sans_type: tV tID $@7 tEQV Expr $@8 Decl_sans_type
+   44               | %empty
+
+   45 Valeurs: tID
+   46        | tNUM
+   47        | tDECIMAL
+   48        | tSTRING
+   49        | tCARACT
+   50        | Boolean
+
+   51 Boolean: tTRUE
+   52        | tFALSE
+
+   53 Ligne: tIF tPARO Tests tPARF Body
+   54      | tIF tPARO Tests tPARF Body tELSE Body
+
+   55 Tests: Test And_or_Test
+
+   56 Test: Expr Cond Expr
+   57     | Expr
+
+   58 And_or_Test: And_Or Test And_or_Test
+   59            | %empty
+
+   60 Cond: tSUP_EGAL
+   61     | tINF_EGAL
+   62     | tSUP
+   63     | tINF
+   64     | tEGAL
+   65     | tDIFF
+
+   66 And_Or: tAND
+   67       | tOR
+
+   68 Ligne: tWHILE tPARO Tests tPARF Body
+   69      | tRET Valeurs tPV
+   70      | tPRINT tPARO Valeurs tPARF tPV
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+tEMOJI (258)
+tMAIN (259) 6
+tCONST (260)
+tBOOL (261) 15
+tINT (262) 11
+tCHARET (263) 14
+tCHAR (264) 12
+tCARACT (265) 49
+tFLOAT (266) 13
+tRET (267) 69
+tVOID (268) 8 10
+tWHILE (269) 68
+tIF (270) 53 54
+tELSE (271) 54
+tPRINT (272) 70
+tPARO (273) 4 6 27 53 54 68 70
+tPARF (274) 4 6 27 53 54 68 70
+tACCO (275) 22
+tACCF (276) 22
+tEXCLAM (277)
+tPLUS (278) 28
+tMOINS (279) 29
+tMUL (280) 30
+tDIV (281) 31
+tEQV (282) 26 38 43
+tPV (283) 25 33 69 70
+tV (284) 19 40 43
+tG (285)
+tNUM (286) 46
+tSTRING (287) 48
+tDECIMAL (288) 47
+tID (289) 4 18 26 35 38 40 43 45
+tERROR (290)
+tSUP_EGAL (291) 60
+tINF_EGAL (292) 61
+tSUP (293) 62
+tINF (294) 63
+tEGAL (295) 64
+tAND (296) 66
+tOR (297) 67
+tTRUE (298) 51
+tFALSE (299) 52
+tDIFF (300) 65
+tCOM (301)
+tIFEND (302)
+
+
+Nonterminals, with rules where they appear
+
+$accept (48)
+    on left: 0
+start (49)
+    on left: 1, on right: 0
+Fonctions (50)
+    on left: 2 3, on right: 1 2
+Fonction (51)
+    on left: 4 6, on right: 2
+$@1 (52)
+    on left: 5, on right: 6
+Type_void (53)
+    on left: 7 8, on right: 4 6
+Args_void (54)
+    on left: 9 10, on right: 4
+Type (55)
+    on left: 11 12 13 14 15, on right: 7 18 35 38
+Args (56)
+    on left: 16 17, on right: 9
+Arg (57)
+    on left: 18, on right: 16 19
+Tv_args (58)
+    on left: 19 20, on right: 16 19
+Body (59)
+    on left: 22, on right: 4 6 53 54 68
+$@2 (60)
+    on left: 21, on right: 22
+Lignes (61)
+    on left: 23 24, on right: 22 23
+Ligne (62)
+    on left: 25 33 53 54 68 69 70, on right: 23
+Affectation (63)
+    on left: 26, on right: 25
+Expr (64)
+    on left: 27 28 29 30 31 32, on right: 26 27 28 29 30 31 38 43 56
+    57
+Declaration (65)
+    on left: 35 38, on right: 33
+$@3 (66)
+    on left: 34, on right: 35
+$@4 (67)
+    on left: 36, on right: 38
+$@5 (68)
+    on left: 37, on right: 38
+Decl_sans_type (69)
+    on left: 40 43 44, on right: 35 38 40 43
+$@6 (70)
+    on left: 39, on right: 40
+$@7 (71)
+    on left: 41, on right: 43
+$@8 (72)
+    on left: 42, on right: 43
+Valeurs (73)
+    on left: 45 46 47 48 49 50, on right: 32 69 70
+Boolean (74)
+    on left: 51 52, on right: 50
+Tests (75)
+    on left: 55, on right: 53 54 68
+Test (76)
+    on left: 56 57, on right: 55 58
+And_or_Test (77)
+    on left: 58 59, on right: 55 58
+Cond (78)
+    on left: 60 61 62 63 64 65, on right: 56
+And_Or (79)
+    on left: 66 67, on right: 58
+
+
+State 0
+
+    0 $accept: . start $end
+
+    tBOOL    shift, and go to state 1
+    tINT     shift, and go to state 2
+    tCHARET  shift, and go to state 3
+    tCHAR    shift, and go to state 4
+    tFLOAT   shift, and go to state 5
+    tVOID    shift, and go to state 6
+
+    $default  reduce using rule 3 (Fonctions)
+
+    start      go to state 7
+    Fonctions  go to state 8
+    Fonction   go to state 9
+    Type_void  go to state 10
+    Type       go to state 11
+
+
+State 1
+
+   15 Type: tBOOL .
+
+    $default  reduce using rule 15 (Type)
+
+
+State 2
+
+   11 Type: tINT .
+
+    $default  reduce using rule 11 (Type)
+
+
+State 3
+
+   14 Type: tCHARET .
+
+    $default  reduce using rule 14 (Type)
+
+
+State 4
+
+   12 Type: tCHAR .
+
+    $default  reduce using rule 12 (Type)
+
+
+State 5
+
+   13 Type: tFLOAT .
+
+    $default  reduce using rule 13 (Type)
+
+
+State 6
+
+    8 Type_void: tVOID .
+
+    $default  reduce using rule 8 (Type_void)
+
+
+State 7
+
+    0 $accept: start . $end
+
+    $end  shift, and go to state 12
+
+
+State 8
+
+    1 start: Fonctions .
+
+    $default  reduce using rule 1 (start)
+
+
+State 9
+
+    2 Fonctions: Fonction . Fonctions
+
+    tBOOL    shift, and go to state 1
+    tINT     shift, and go to state 2
+    tCHARET  shift, and go to state 3
+    tCHAR    shift, and go to state 4
+    tFLOAT   shift, and go to state 5
+    tVOID    shift, and go to state 6
+
+    $default  reduce using rule 3 (Fonctions)
+
+    Fonctions  go to state 13
+    Fonction   go to state 9
+    Type_void  go to state 10
+    Type       go to state 11
+
+
+State 10
+
+    4 Fonction: Type_void . tID tPARO Args_void tPARF Body
+    6         | Type_void . tMAIN $@1 tPARO tPARF Body
+
+    tMAIN  shift, and go to state 14
+    tID    shift, and go to state 15
+
+
+State 11
+
+    7 Type_void: Type .
+
+    $default  reduce using rule 7 (Type_void)
+
+
+State 12
+
+    0 $accept: start $end .
+
+    $default  accept
+
+
+State 13
+
+    2 Fonctions: Fonction Fonctions .
+
+    $default  reduce using rule 2 (Fonctions)
+
+
+State 14
+
+    6 Fonction: Type_void tMAIN . $@1 tPARO tPARF Body
+
+    $default  reduce using rule 5 ($@1)
+
+    $@1  go to state 16
+
+
+State 15
+
+    4 Fonction: Type_void tID . tPARO Args_void tPARF Body
+
+    tPARO  shift, and go to state 17
+
+
+State 16
+
+    6 Fonction: Type_void tMAIN $@1 . tPARO tPARF Body
+
+    tPARO  shift, and go to state 18
+
+
+State 17
+
+    4 Fonction: Type_void tID tPARO . Args_void tPARF Body
+
+    tBOOL    shift, and go to state 1
+    tINT     shift, and go to state 2
+    tCHARET  shift, and go to state 3
+    tCHAR    shift, and go to state 4
+    tFLOAT   shift, and go to state 5
+    tVOID    shift, and go to state 19
+
+    $default  reduce using rule 17 (Args)
+
+    Args_void  go to state 20
+    Type       go to state 21
+    Args       go to state 22
+    Arg        go to state 23
+
+
+State 18
+
+    6 Fonction: Type_void tMAIN $@1 tPARO . tPARF Body
+
+    tPARF  shift, and go to state 24
+
+
+State 19
+
+   10 Args_void: tVOID .
+
+    $default  reduce using rule 10 (Args_void)
+
+
+State 20
+
+    4 Fonction: Type_void tID tPARO Args_void . tPARF Body
+
+    tPARF  shift, and go to state 25
+
+
+State 21
+
+   18 Arg: Type . tID
+
+    tID  shift, and go to state 26
+
+
+State 22
+
+    9 Args_void: Args .
+
+    $default  reduce using rule 9 (Args_void)
+
+
+State 23
+
+   16 Args: Arg . Tv_args
+
+    tV  shift, and go to state 27
+
+    $default  reduce using rule 20 (Tv_args)
+
+    Tv_args  go to state 28
+
+
+State 24
+
+    6 Fonction: Type_void tMAIN $@1 tPARO tPARF . Body
+
+    tACCO  shift, and go to state 29
+
+    Body  go to state 30
+
+
+State 25
+
+    4 Fonction: Type_void tID tPARO Args_void tPARF . Body
+
+    tACCO  shift, and go to state 29
+
+    Body  go to state 31
+
+
+State 26
+
+   18 Arg: Type tID .
+
+    $default  reduce using rule 18 (Arg)
+
+
+State 27
+
+   19 Tv_args: tV . Arg Tv_args
+
+    tBOOL    shift, and go to state 1
+    tINT     shift, and go to state 2
+    tCHARET  shift, and go to state 3
+    tCHAR    shift, and go to state 4
+    tFLOAT   shift, and go to state 5
+
+    Type  go to state 21
+    Arg   go to state 32
+
+
+State 28
+
+   16 Args: Arg Tv_args .
+
+    $default  reduce using rule 16 (Args)
+
+
+State 29
+
+   22 Body: tACCO . $@2 Lignes tACCF
+
+    $default  reduce using rule 21 ($@2)
+
+    $@2  go to state 33
+
+
+State 30
+
+    6 Fonction: Type_void tMAIN $@1 tPARO tPARF Body .
+
+    $default  reduce using rule 6 (Fonction)
+
+
+State 31
+
+    4 Fonction: Type_void tID tPARO Args_void tPARF Body .
+
+    $default  reduce using rule 4 (Fonction)
+
+
+State 32
+
+   19 Tv_args: tV Arg . Tv_args
+
+    tV  shift, and go to state 27
+
+    $default  reduce using rule 20 (Tv_args)
+
+    Tv_args  go to state 34
+
+
+State 33
+
+   22 Body: tACCO $@2 . Lignes tACCF
+
+    tBOOL    shift, and go to state 1
+    tINT     shift, and go to state 2
+    tCHARET  shift, and go to state 3
+    tCHAR    shift, and go to state 4
+    tFLOAT   shift, and go to state 5
+    tRET     shift, and go to state 35
+    tWHILE   shift, and go to state 36
+    tIF      shift, and go to state 37
+    tPRINT   shift, and go to state 38
+    tID      shift, and go to state 39
+
+    $default  reduce using rule 24 (Lignes)
+
+    Type         go to state 40
+    Lignes       go to state 41
+    Ligne        go to state 42
+    Affectation  go to state 43
+    Declaration  go to state 44
+
+
+State 34
+
+   19 Tv_args: tV Arg Tv_args .
+
+    $default  reduce using rule 19 (Tv_args)
+
+
+State 35
+
+   69 Ligne: tRET . Valeurs tPV
+
+    tCARACT   shift, and go to state 45
+    tNUM      shift, and go to state 46
+    tSTRING   shift, and go to state 47
+    tDECIMAL  shift, and go to state 48
+    tID       shift, and go to state 49
+    tTRUE     shift, and go to state 50
+    tFALSE    shift, and go to state 51
+
+    Valeurs  go to state 52
+    Boolean  go to state 53
+
+
+State 36
+
+   68 Ligne: tWHILE . tPARO Tests tPARF Body
+
+    tPARO  shift, and go to state 54
+
+
+State 37
+
+   53 Ligne: tIF . tPARO Tests tPARF Body
+   54      | tIF . tPARO Tests tPARF Body tELSE Body
+
+    tPARO  shift, and go to state 55
+
+
+State 38
+
+   70 Ligne: tPRINT . tPARO Valeurs tPARF tPV
+
+    tPARO  shift, and go to state 56
+
+
+State 39
+
+   26 Affectation: tID . tEQV Expr
+
+    tEQV  shift, and go to state 57
+
+
+State 40
+
+   35 Declaration: Type . tID $@3 Decl_sans_type
+   38            | Type . tID $@4 tEQV Expr $@5 Decl_sans_type
+
+    tID  shift, and go to state 58
+
+
+State 41
+
+   22 Body: tACCO $@2 Lignes . tACCF
+
+    tACCF  shift, and go to state 59
+
+
+State 42
+
+   23 Lignes: Ligne . Lignes
+
+    tBOOL    shift, and go to state 1
+    tINT     shift, and go to state 2
+    tCHARET  shift, and go to state 3
+    tCHAR    shift, and go to state 4
+    tFLOAT   shift, and go to state 5
+    tRET     shift, and go to state 35
+    tWHILE   shift, and go to state 36
+    tIF      shift, and go to state 37
+    tPRINT   shift, and go to state 38
+    tID      shift, and go to state 39
+
+    $default  reduce using rule 24 (Lignes)
+
+    Type         go to state 40
+    Lignes       go to state 60
+    Ligne        go to state 42
+    Affectation  go to state 43
+    Declaration  go to state 44
+
+
+State 43
+
+   25 Ligne: Affectation . tPV
+
+    tPV  shift, and go to state 61
+
+
+State 44
+
+   33 Ligne: Declaration . tPV
+
+    tPV  shift, and go to state 62
+
+
+State 45
+
+   49 Valeurs: tCARACT .
+
+    $default  reduce using rule 49 (Valeurs)
+
+
+State 46
+
+   46 Valeurs: tNUM .
+
+    $default  reduce using rule 46 (Valeurs)
+
+
+State 47
+
+   48 Valeurs: tSTRING .
+
+    $default  reduce using rule 48 (Valeurs)
+
+
+State 48
+
+   47 Valeurs: tDECIMAL .
+
+    $default  reduce using rule 47 (Valeurs)
+
+
+State 49
+
+   45 Valeurs: tID .
+
+    $default  reduce using rule 45 (Valeurs)
+
+
+State 50
+
+   51 Boolean: tTRUE .
+
+    $default  reduce using rule 51 (Boolean)
+
+
+State 51
+
+   52 Boolean: tFALSE .
+
+    $default  reduce using rule 52 (Boolean)
+
+
+State 52
+
+   69 Ligne: tRET Valeurs . tPV
+
+    tPV  shift, and go to state 63
+
+
+State 53
+
+   50 Valeurs: Boolean .
+
+    $default  reduce using rule 50 (Valeurs)
+
+
+State 54
+
+   68 Ligne: tWHILE tPARO . Tests tPARF Body
+
+    tCARACT   shift, and go to state 45
+    tPARO     shift, and go to state 64
+    tNUM      shift, and go to state 46
+    tSTRING   shift, and go to state 47
+    tDECIMAL  shift, and go to state 48
+    tID       shift, and go to state 49
+    tTRUE     shift, and go to state 50
+    tFALSE    shift, and go to state 51
+
+    Expr     go to state 65
+    Valeurs  go to state 66
+    Boolean  go to state 53
+    Tests    go to state 67
+    Test     go to state 68
+
+
+State 55
+
+   53 Ligne: tIF tPARO . Tests tPARF Body
+   54      | tIF tPARO . Tests tPARF Body tELSE Body
+
+    tCARACT   shift, and go to state 45
+    tPARO     shift, and go to state 64
+    tNUM      shift, and go to state 46
+    tSTRING   shift, and go to state 47
+    tDECIMAL  shift, and go to state 48
+    tID       shift, and go to state 49
+    tTRUE     shift, and go to state 50
+    tFALSE    shift, and go to state 51
+
+    Expr     go to state 65
+    Valeurs  go to state 66
+    Boolean  go to state 53
+    Tests    go to state 69
+    Test     go to state 68
+
+
+State 56
+
+   70 Ligne: tPRINT tPARO . Valeurs tPARF tPV
+
+    tCARACT   shift, and go to state 45
+    tNUM      shift, and go to state 46
+    tSTRING   shift, and go to state 47
+    tDECIMAL  shift, and go to state 48
+    tID       shift, and go to state 49
+    tTRUE     shift, and go to state 50
+    tFALSE    shift, and go to state 51
+
+    Valeurs  go to state 70
+    Boolean  go to state 53
+
+
+State 57
+
+   26 Affectation: tID tEQV . Expr
+
+    tCARACT   shift, and go to state 45
+    tPARO     shift, and go to state 64
+    tNUM      shift, and go to state 46
+    tSTRING   shift, and go to state 47
+    tDECIMAL  shift, and go to state 48
+    tID       shift, and go to state 49
+    tTRUE     shift, and go to state 50
+    tFALSE    shift, and go to state 51
+
+    Expr     go to state 71
+    Valeurs  go to state 66
+    Boolean  go to state 53
+
+
+State 58
+
+   35 Declaration: Type tID . $@3 Decl_sans_type
+   38            | Type tID . $@4 tEQV Expr $@5 Decl_sans_type
+
+    tEQV      reduce using rule 36 ($@4)
+    $default  reduce using rule 34 ($@3)
+
+    $@3  go to state 72
+    $@4  go to state 73
+
+
+State 59
+
+   22 Body: tACCO $@2 Lignes tACCF .
+
+    $default  reduce using rule 22 (Body)
+
+
+State 60
+
+   23 Lignes: Ligne Lignes .
+
+    $default  reduce using rule 23 (Lignes)
+
+
+State 61
+
+   25 Ligne: Affectation tPV .
+
+    $default  reduce using rule 25 (Ligne)
+
+
+State 62
+
+   33 Ligne: Declaration tPV .
+
+    $default  reduce using rule 33 (Ligne)
+
+
+State 63
+
+   69 Ligne: tRET Valeurs tPV .
+
+    $default  reduce using rule 69 (Ligne)
+
+
+State 64
+
+   27 Expr: tPARO . Expr tPARF
+
+    tCARACT   shift, and go to state 45
+    tPARO     shift, and go to state 64
+    tNUM      shift, and go to state 46
+    tSTRING   shift, and go to state 47
+    tDECIMAL  shift, and go to state 48
+    tID       shift, and go to state 49
+    tTRUE     shift, and go to state 50
+    tFALSE    shift, and go to state 51
+
+    Expr     go to state 74
+    Valeurs  go to state 66
+    Boolean  go to state 53
+
+
+State 65
+
+   28 Expr: Expr . tPLUS Expr
+   29     | Expr . tMOINS Expr
+   30     | Expr . tMUL Expr
+   31     | Expr . tDIV Expr
+   56 Test: Expr . Cond Expr
+   57     | Expr .
+
+    tPLUS      shift, and go to state 75
+    tMOINS     shift, and go to state 76
+    tMUL       shift, and go to state 77
+    tDIV       shift, and go to state 78
+    tSUP_EGAL  shift, and go to state 79
+    tINF_EGAL  shift, and go to state 80
+    tSUP       shift, and go to state 81
+    tINF       shift, and go to state 82
+    tEGAL      shift, and go to state 83
+    tDIFF      shift, and go to state 84
+
+    $default  reduce using rule 57 (Test)
+
+    Cond  go to state 85
+
+
+State 66
+
+   32 Expr: Valeurs .
+
+    $default  reduce using rule 32 (Expr)
+
+
+State 67
+
+   68 Ligne: tWHILE tPARO Tests . tPARF Body
+
+    tPARF  shift, and go to state 86
+
+
+State 68
+
+   55 Tests: Test . And_or_Test
+
+    tAND  shift, and go to state 87
+    tOR   shift, and go to state 88
+
+    $default  reduce using rule 59 (And_or_Test)
+
+    And_or_Test  go to state 89
+    And_Or       go to state 90
+
+
+State 69
+
+   53 Ligne: tIF tPARO Tests . tPARF Body
+   54      | tIF tPARO Tests . tPARF Body tELSE Body
+
+    tPARF  shift, and go to state 91
+
+
+State 70
+
+   70 Ligne: tPRINT tPARO Valeurs . tPARF tPV
+
+    tPARF  shift, and go to state 92
+
+
+State 71
+
+   26 Affectation: tID tEQV Expr .
+   28 Expr: Expr . tPLUS Expr
+   29     | Expr . tMOINS Expr
+   30     | Expr . tMUL Expr
+   31     | Expr . tDIV Expr
+
+    tPLUS   shift, and go to state 75
+    tMOINS  shift, and go to state 76
+    tMUL    shift, and go to state 77
+    tDIV    shift, and go to state 78
+
+    $default  reduce using rule 26 (Affectation)
+
+
+State 72
+
+   35 Declaration: Type tID $@3 . Decl_sans_type
+
+    tV  shift, and go to state 93
+
+    $default  reduce using rule 44 (Decl_sans_type)
+
+    Decl_sans_type  go to state 94
+
+
+State 73
+
+   38 Declaration: Type tID $@4 . tEQV Expr $@5 Decl_sans_type
+
+    tEQV  shift, and go to state 95
+
+
+State 74
+
+   27 Expr: tPARO Expr . tPARF
+   28     | Expr . tPLUS Expr
+   29     | Expr . tMOINS Expr
+   30     | Expr . tMUL Expr
+   31     | Expr . tDIV Expr
+
+    tPARF   shift, and go to state 96
+    tPLUS   shift, and go to state 75
+    tMOINS  shift, and go to state 76
+    tMUL    shift, and go to state 77
+    tDIV    shift, and go to state 78
+
+
+State 75
+
+   28 Expr: Expr tPLUS . Expr
+
+    tCARACT   shift, and go to state 45
+    tPARO     shift, and go to state 64
+    tNUM      shift, and go to state 46
+    tSTRING   shift, and go to state 47
+    tDECIMAL  shift, and go to state 48
+    tID       shift, and go to state 49
+    tTRUE     shift, and go to state 50
+    tFALSE    shift, and go to state 51
+
+    Expr     go to state 97
+    Valeurs  go to state 66
+    Boolean  go to state 53
+
+
+State 76
+
+   29 Expr: Expr tMOINS . Expr
+
+    tCARACT   shift, and go to state 45
+    tPARO     shift, and go to state 64
+    tNUM      shift, and go to state 46
+    tSTRING   shift, and go to state 47
+    tDECIMAL  shift, and go to state 48
+    tID       shift, and go to state 49
+    tTRUE     shift, and go to state 50
+    tFALSE    shift, and go to state 51
+
+    Expr     go to state 98
+    Valeurs  go to state 66
+    Boolean  go to state 53
+
+
+State 77
+
+   30 Expr: Expr tMUL . Expr
+
+    tCARACT   shift, and go to state 45
+    tPARO     shift, and go to state 64
+    tNUM      shift, and go to state 46
+    tSTRING   shift, and go to state 47
+    tDECIMAL  shift, and go to state 48
+    tID       shift, and go to state 49
+    tTRUE     shift, and go to state 50
+    tFALSE    shift, and go to state 51
+
+    Expr     go to state 99
+    Valeurs  go to state 66
+    Boolean  go to state 53
+
+
+State 78
+
+   31 Expr: Expr tDIV . Expr
+
+    tCARACT   shift, and go to state 45
+    tPARO     shift, and go to state 64
+    tNUM      shift, and go to state 46
+    tSTRING   shift, and go to state 47
+    tDECIMAL  shift, and go to state 48
+    tID       shift, and go to state 49
+    tTRUE     shift, and go to state 50
+    tFALSE    shift, and go to state 51
+
+    Expr     go to state 100
+    Valeurs  go to state 66
+    Boolean  go to state 53
+
+
+State 79
+
+   60 Cond: tSUP_EGAL .
+
+    $default  reduce using rule 60 (Cond)
+
+
+State 80
+
+   61 Cond: tINF_EGAL .
+
+    $default  reduce using rule 61 (Cond)
+
+
+State 81
+
+   62 Cond: tSUP .
+
+    $default  reduce using rule 62 (Cond)
+
+
+State 82
+
+   63 Cond: tINF .
+
+    $default  reduce using rule 63 (Cond)
+
+
+State 83
+
+   64 Cond: tEGAL .
+
+    $default  reduce using rule 64 (Cond)
+
+
+State 84
+
+   65 Cond: tDIFF .
+
+    $default  reduce using rule 65 (Cond)
+
+
+State 85
+
+   56 Test: Expr Cond . Expr
+
+    tCARACT   shift, and go to state 45
+    tPARO     shift, and go to state 64
+    tNUM      shift, and go to state 46
+    tSTRING   shift, and go to state 47
+    tDECIMAL  shift, and go to state 48
+    tID       shift, and go to state 49
+    tTRUE     shift, and go to state 50
+    tFALSE    shift, and go to state 51
+
+    Expr     go to state 101
+    Valeurs  go to state 66
+    Boolean  go to state 53
+
+
+State 86
+
+   68 Ligne: tWHILE tPARO Tests tPARF . Body
+
+    tACCO  shift, and go to state 29
+
+    Body  go to state 102
+
+
+State 87
+
+   66 And_Or: tAND .
+
+    $default  reduce using rule 66 (And_Or)
+
+
+State 88
+
+   67 And_Or: tOR .
+
+    $default  reduce using rule 67 (And_Or)
+
+
+State 89
+
+   55 Tests: Test And_or_Test .
+
+    $default  reduce using rule 55 (Tests)
+
+
+State 90
+
+   58 And_or_Test: And_Or . Test And_or_Test
+
+    tCARACT   shift, and go to state 45
+    tPARO     shift, and go to state 64
+    tNUM      shift, and go to state 46
+    tSTRING   shift, and go to state 47
+    tDECIMAL  shift, and go to state 48
+    tID       shift, and go to state 49
+    tTRUE     shift, and go to state 50
+    tFALSE    shift, and go to state 51
+
+    Expr     go to state 65
+    Valeurs  go to state 66
+    Boolean  go to state 53
+    Test     go to state 103
+
+
+State 91
+
+   53 Ligne: tIF tPARO Tests tPARF . Body
+   54      | tIF tPARO Tests tPARF . Body tELSE Body
+
+    tACCO  shift, and go to state 29
+
+    Body  go to state 104
+
+
+State 92
+
+   70 Ligne: tPRINT tPARO Valeurs tPARF . tPV
+
+    tPV  shift, and go to state 105
+
+
+State 93
+
+   40 Decl_sans_type: tV . tID $@6 Decl_sans_type
+   43               | tV . tID $@7 tEQV Expr $@8 Decl_sans_type
+
+    tID  shift, and go to state 106
+
+
+State 94
+
+   35 Declaration: Type tID $@3 Decl_sans_type .
+
+    $default  reduce using rule 35 (Declaration)
+
+
+State 95
+
+   38 Declaration: Type tID $@4 tEQV . Expr $@5 Decl_sans_type
+
+    tCARACT   shift, and go to state 45
+    tPARO     shift, and go to state 64
+    tNUM      shift, and go to state 46
+    tSTRING   shift, and go to state 47
+    tDECIMAL  shift, and go to state 48
+    tID       shift, and go to state 49
+    tTRUE     shift, and go to state 50
+    tFALSE    shift, and go to state 51
+
+    Expr     go to state 107
+    Valeurs  go to state 66
+    Boolean  go to state 53
+
+
+State 96
+
+   27 Expr: tPARO Expr tPARF .
+
+    $default  reduce using rule 27 (Expr)
+
+
+State 97
+
+   28 Expr: Expr . tPLUS Expr
+   28     | Expr tPLUS Expr .
+   29     | Expr . tMOINS Expr
+   30     | Expr . tMUL Expr
+   31     | Expr . tDIV Expr
+
+    tMUL  shift, and go to state 77
+    tDIV  shift, and go to state 78
+
+    $default  reduce using rule 28 (Expr)
+
+
+State 98
+
+   28 Expr: Expr . tPLUS Expr
+   29     | Expr . tMOINS Expr
+   29     | Expr tMOINS Expr .
+   30     | Expr . tMUL Expr
+   31     | Expr . tDIV Expr
+
+    tMUL  shift, and go to state 77
+    tDIV  shift, and go to state 78
+
+    $default  reduce using rule 29 (Expr)
+
+
+State 99
+
+   28 Expr: Expr . tPLUS Expr
+   29     | Expr . tMOINS Expr
+   30     | Expr . tMUL Expr
+   30     | Expr tMUL Expr .
+   31     | Expr . tDIV Expr
+
+    $default  reduce using rule 30 (Expr)
+
+
+State 100
+
+   28 Expr: Expr . tPLUS Expr
+   29     | Expr . tMOINS Expr
+   30     | Expr . tMUL Expr
+   31     | Expr . tDIV Expr
+   31     | Expr tDIV Expr .
+
+    $default  reduce using rule 31 (Expr)
+
+
+State 101
+
+   28 Expr: Expr . tPLUS Expr
+   29     | Expr . tMOINS Expr
+   30     | Expr . tMUL Expr
+   31     | Expr . tDIV Expr
+   56 Test: Expr Cond Expr .
+
+    tPLUS   shift, and go to state 75
+    tMOINS  shift, and go to state 76
+    tMUL    shift, and go to state 77
+    tDIV    shift, and go to state 78
+
+    $default  reduce using rule 56 (Test)
+
+
+State 102
+
+   68 Ligne: tWHILE tPARO Tests tPARF Body .
+
+    $default  reduce using rule 68 (Ligne)
+
+
+State 103
+
+   58 And_or_Test: And_Or Test . And_or_Test
+
+    tAND  shift, and go to state 87
+    tOR   shift, and go to state 88
+
+    $default  reduce using rule 59 (And_or_Test)
+
+    And_or_Test  go to state 108
+    And_Or       go to state 90
+
+
+State 104
+
+   53 Ligne: tIF tPARO Tests tPARF Body .
+   54      | tIF tPARO Tests tPARF Body . tELSE Body
+
+    tELSE  shift, and go to state 109
+
+    $default  reduce using rule 53 (Ligne)
+
+
+State 105
+
+   70 Ligne: tPRINT tPARO Valeurs tPARF tPV .
+
+    $default  reduce using rule 70 (Ligne)
+
+
+State 106
+
+   40 Decl_sans_type: tV tID . $@6 Decl_sans_type
+   43               | tV tID . $@7 tEQV Expr $@8 Decl_sans_type
+
+    tEQV      reduce using rule 41 ($@7)
+    $default  reduce using rule 39 ($@6)
+
+    $@6  go to state 110
+    $@7  go to state 111
+
+
+State 107
+
+   28 Expr: Expr . tPLUS Expr
+   29     | Expr . tMOINS Expr
+   30     | Expr . tMUL Expr
+   31     | Expr . tDIV Expr
+   38 Declaration: Type tID $@4 tEQV Expr . $@5 Decl_sans_type
+
+    tPLUS   shift, and go to state 75
+    tMOINS  shift, and go to state 76
+    tMUL    shift, and go to state 77
+    tDIV    shift, and go to state 78
+
+    $default  reduce using rule 37 ($@5)
+
+    $@5  go to state 112
+
+
+State 108
+
+   58 And_or_Test: And_Or Test And_or_Test .
+
+    $default  reduce using rule 58 (And_or_Test)
+
+
+State 109
+
+   54 Ligne: tIF tPARO Tests tPARF Body tELSE . Body
+
+    tACCO  shift, and go to state 29
+
+    Body  go to state 113
+
+
+State 110
+
+   40 Decl_sans_type: tV tID $@6 . Decl_sans_type
+
+    tV  shift, and go to state 93
+
+    $default  reduce using rule 44 (Decl_sans_type)
+
+    Decl_sans_type  go to state 114
+
+
+State 111
+
+   43 Decl_sans_type: tV tID $@7 . tEQV Expr $@8 Decl_sans_type
+
+    tEQV  shift, and go to state 115
+
+
+State 112
+
+   38 Declaration: Type tID $@4 tEQV Expr $@5 . Decl_sans_type
+
+    tV  shift, and go to state 93
+
+    $default  reduce using rule 44 (Decl_sans_type)
+
+    Decl_sans_type  go to state 116
+
+
+State 113
+
+   54 Ligne: tIF tPARO Tests tPARF Body tELSE Body .
+
+    $default  reduce using rule 54 (Ligne)
+
+
+State 114
+
+   40 Decl_sans_type: tV tID $@6 Decl_sans_type .
+
+    $default  reduce using rule 40 (Decl_sans_type)
+
+
+State 115
+
+   43 Decl_sans_type: tV tID $@7 tEQV . Expr $@8 Decl_sans_type
+
+    tCARACT   shift, and go to state 45
+    tPARO     shift, and go to state 64
+    tNUM      shift, and go to state 46
+    tSTRING   shift, and go to state 47
+    tDECIMAL  shift, and go to state 48
+    tID       shift, and go to state 49
+    tTRUE     shift, and go to state 50
+    tFALSE    shift, and go to state 51
+
+    Expr     go to state 117
+    Valeurs  go to state 66
+    Boolean  go to state 53
+
+
+State 116
+
+   38 Declaration: Type tID $@4 tEQV Expr $@5 Decl_sans_type .
+
+    $default  reduce using rule 38 (Declaration)
+
+
+State 117
+
+   28 Expr: Expr . tPLUS Expr
+   29     | Expr . tMOINS Expr
+   30     | Expr . tMUL Expr
+   31     | Expr . tDIV Expr
+   43 Decl_sans_type: tV tID $@7 tEQV Expr . $@8 Decl_sans_type
+
+    tPLUS   shift, and go to state 75
+    tMOINS  shift, and go to state 76
+    tMUL    shift, and go to state 77
+    tDIV    shift, and go to state 78
+
+    $default  reduce using rule 42 ($@8)
+
+    $@8  go to state 118
+
+
+State 118
+
+   43 Decl_sans_type: tV tID $@7 tEQV Expr $@8 . Decl_sans_type
+
+    tV  shift, and go to state 93
+
+    $default  reduce using rule 44 (Decl_sans_type)
+
+    Decl_sans_type  go to state 119
+
+
+State 119
+
+   43 Decl_sans_type: tV tID $@7 tEQV Expr $@8 Decl_sans_type .
+
+    $default  reduce using rule 43 (Decl_sans_type)
